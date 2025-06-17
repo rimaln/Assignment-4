@@ -161,7 +161,7 @@ goodreads_data <- goodreads_data %>%
   )
 ```
 
-*Popularity and Ratings*
+**Author Influence**
 ```{r}
 library(ggplot2)
 library(tidyr)
@@ -199,6 +199,24 @@ ggplot(violin_data, aes(x = reorder(authors, average_rating, FUN = median), y = 
   )
 ```
 
+**Popularity and Ratings**
+```{r}
+library(scales)
+
+ggplot(goodreads_data, aes(x = ratings_count, y = average_rating)) +
+  geom_point(aes(size = num_pages, color = average_rating), alpha = 0.5) +
+  scale_x_log10(labels = comma) +
+  scale_size_continuous(range = c(1, 10), breaks = c(100, 300, 600, 1000)) +
+  scale_color_viridis_c(option = "C", limits = c(3, 5)) +
+  labs(
+    title = "Bubble Plot: Average Rating vs Ratings Count",
+    x = "Ratings Count (log scale)",
+    y = "Average Rating",
+    color = "Avg Rating",
+    size = "Page Count"
+  ) +
+  theme_minimal()
+```
 
 5.  Conclusions\
 6.  References
