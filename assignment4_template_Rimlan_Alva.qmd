@@ -1,5 +1,5 @@
 ---
-title: "What is your blogpost title? Add it here??"
+title: "Goodreads Books Dataset Overview and Author’s Notes"
 subtitle: "Assignment 4 ETC5512"
 author: "Rimlan Alva"
 format: html
@@ -34,6 +34,38 @@ The dataset contains no personal user data — only aggregated ratings and book 
 
 - **Aligned with My Question:**
 Since my question revolves around identifying and recommending highly-rated books, this dataset provides exactly the type of information I need to evaluate book popularity and reader preferences.
+
+3. *Data Type*
+- The dataset is **observational sample data**, compiled through web scraping of publicly available book information on Goodreads.
+- It is **not experimental**; rather, it is an aggregate of user ratings and book details collected over time.
+- It can be considered a **sample** of books from Goodreads rather than a complete census of all published books.
+
+- *Data Dictionary*
+
+| Variable Name      | Description                              | Data Type          |
+|--------------------|------------------------------------------|--------------------|
+| `title`            | Title of the book                        | Categorical (text) |
+| `author`           | Name of the author                       | Categorical (text) |
+| `average_rating`   | Average user rating (scale 1 to 5)       | Numeric (float)     |
+| `ratings_count`    | Number of user ratings                    | Numeric (integer)   |
+| `publisher`        | Publisher of the book                    | Categorical (text) |
+| `publication_date` | Date when the book was published         | Date / Categorical  |
+| `genre`            | Genre or category of the book (if present) | Categorical (text) |
+
+*Data Limitations*
+
+- The dataset reflects **only books listed and rated on Goodreads**, which may introduce bias toward more popular or English-language titles.
+- The ratings are **aggregated user ratings**, which may be subject to biases such as popularity bias or rating inflation.
+- Some fields, such as genre or publication date, may have **missing or inconsistent values**.
+- The dataset may not fully represent all book markets or reader demographics worldwide.
+
+*Data Privacy and Ethical Considerations*
+
+- The dataset contains **no personally identifiable information (PII)** or individual user data; only aggregated ratings and book metadata are included.
+- Use of this dataset is **ethically appropriate for educational and analytical purposes**.
+- Since the data is publicly available and anonymized, there are no privacy risks associated with its use.
+- I acknowledge the importance of using data responsibly and transparently, avoiding misrepresentation or over-generalization based on this sample.
+
 
 
 
