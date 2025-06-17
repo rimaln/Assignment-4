@@ -1,0 +1,73 @@
+---
+title: "What is your blogpost title? Add it here??"
+subtitle: "Assignment 4 ETC5512"
+author: "Rimlan Alva"
+format: html
+editor: visual
+---
+
+::: panel-tabset
+<!-- Task 1 Tab: Data and Documenting -->
+
+## Data and Documenting
+
+### What's in this section
+
+1.  Can we recommend high-quality books based on community preferences? 
+ In particular, I aim to explore how average ratings, rating count, genre, and authorship influence what books we might recommend. I chose this because I'm an avid reader and have always wanted to see if a data-driven approach could suggest books I might love but haven’t discovered.
+ 
+2. For this project, I’m using a Goodreads dataset that includes detailed metadata on thousands of books—such as titles, authors, average ratings, rating counts, publishers, and publication dates. Originally scraped and shared on Kaggle, it was curated to support book recommendation systems, making it well-suited for analyzing reader preferences and identifying top-rated books.
+
+This dataset is highly suitable for my task for several reasons:
+
+- **Rich in Numeric and Categorical Variables:**
+It includes average ratings (1–5 scale), number of ratings, and publication details — which are essential for ranking and filtering books.
+
+- **Well-Structured:**
+The dataset is clean and consolidated into a single file, with minimal preprocessing needed compared to many other book datasets.
+
+- **Supports Recommendation Use Cases:**
+With user rating aggregates and author/book metadata, I can analyze trends, identify top books in each genre or by rating, and simulate a basic recommendation approach.
+
+- **Ethically Acceptable:**
+The dataset contains no personal user data — only aggregated ratings and book details — making it appropriate for educational and analytical use.
+
+- **Aligned with My Question:**
+Since my question revolves around identifying and recommending highly-rated books, this dataset provides exactly the type of information I need to evaluate book popularity and reader preferences.
+
+
+
+
+### Remember
+
+Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
+
+<!-- Task 2 Tab: Writing your blogpost -->
+
+## Blog post
+
+### What's in this section
+
+Here is where you should write your blogpost! (Task 2)
+
+### Blogpost Structure
+
+There is no strict structure for you to follow. However, here is a skeleton structure you may find helpful.
+
+1.  Title (is set at the top of this document)
+2.  Motivation\
+3.  Data\
+4.  Analysis\
+5.  Conclusions\
+6.  References
+
+<!-- Task 3 Tab: Behind the Scenes -  -->
+
+## Behind the Scenes
+
+### What's in this section
+
+Here is where you should tell us about your reflection on your analysis (Task 3).
+
+Again, these are the details about **your** perspective and the gritty details behind the scenes of your analysis.
+:::
