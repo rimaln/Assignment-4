@@ -71,7 +71,7 @@ Since my question revolves around identifying and recommending highly-rated book
 i. *Download the Dataset*
 
 - The dataset is publicly available on Kaggle.  
-- Visit the dataset page at: https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks
+- Visit the dataset page at: [https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks]
 - Sign in or create a free Kaggle account if you don’t have one.  
 - Click the **Download** button to download the dataset ZIP file.
 
@@ -129,12 +129,77 @@ Here is where you should write your blogpost! (Task 2)
 
 ### Blogpost Structure
 
-There is no strict structure for you to follow. However, here is a skeleton structure you may find helpful.
+1.  Title : Goodreads Books Dataset Overview and Author’s Notes
 
-1.  Title (is set at the top of this document)
-2.  Motivation\
-3.  Data\
-4.  Analysis\
+2.  Motivation:  As an avid reader, I often wonder what makes a book truly worth reading. Can data from a large community of readers help us identify high-quality books? This blog post explores the Goodreads Books dataset to answer:
+
+- How do average ratings relate to the number of ratings a book receives?
+- Are certain authors consistently producing higher-rated books?
+- Does the length of a book (page count) affect its average rating?
+
+By investigating these questions, I aim to uncover insights into book popularity and quality from a data-driven perspective.
+
+3.  Data: The dataset I’m using contains detailed metadata for over 11,000 books from Goodreads, including titles, authors, average ratings, rating counts, publishers, publication dates, and page counts. It was originally scraped and shared on Kaggle, making it ideal for analyzing reader preferences and identifying top-rated books. 
+
+The data includes numeric variables (average_rating, ratings_count, num_pages) and categorical variables (authors, publisher, genre). This combination allows a multifaceted exploration of what makes a book worth recommending.
+
+4.  Analysis : 
+```{r}
+library(tidyverse)
+library(dplyr)
+
+# Load data
+goodreads_data <- read.csv("data/books.csv", stringsAsFactors = FALSE)
+
+# Data cleaning
+goodreads_data <- goodreads_data %>%
+  filter(!is.na(as.numeric(average_rating))) %>%
+  mutate(
+    average_rating = as.numeric(average_rating),
+    num_pages = as.numeric(num_pages),
+    publication_date = as.Date(publication_date, format = "%m/%d/%Y")
+  )
+```
+
+*Popularity and Ratings*
+```{r}
+library(ggplot2)
+library(tidyr)
+
+# Preprocess: select authors with >= 5 books
+top_authors <- goodreads_data %>%
+  tidyr::separate_rows(authors, sep = "/") %>%
+  group_by(authors) %>%
+  filter(n() >= 5) %>%
+  ungroup()
+
+top8 <- top_authors %>%
+  count(authors, sort = TRUE) %>%
+  slice_head(n = 8) %>%
+  pull(authors)
+
+# Filter again for top 8 authors only
+violin_data <- top_authors %>%
+  filter(authors %in% top8)
+
+# Violin plot
+ggplot(violin_data, aes(x = reorder(authors, average_rating, FUN = median), y = average_rating, fill = authors)) +
+  geom_violin(color = "gray20", alpha = 0.8) +
+  geom_boxplot(width = 0.1, outlier.shape = NA, fill = "white", color = "black") +
+  scale_fill_brewer(palette = "PuBuGn") +
+  labs(
+    title = "Distribution of Average Ratings for Top Authors",
+    x = "Author",
+    y = "Average Rating"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  )
+```
+
+
 5.  Conclusions\
 6.  References
 
