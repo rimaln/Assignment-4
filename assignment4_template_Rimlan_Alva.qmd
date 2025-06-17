@@ -66,13 +66,58 @@ Since my question revolves around identifying and recommending highly-rated book
 - Since the data is publicly available and anonymized, there are no privacy risks associated with its use.
 - I acknowledge the importance of using data responsibly and transparently, avoiding misrepresentation or over-generalization based on this sample.
 
+4. *Data Download and Processing Steps*
+
+i. *Download the Dataset*
+
+- The dataset is publicly available on Kaggle.  
+- Visit the dataset page at: https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks
+- Sign in or create a free Kaggle account if you don’t have one.  
+- Click the **Download** button to download the dataset ZIP file.
+
+ii. *Extract the Files*
+
+- Unzip the downloaded dataset folder to a working directory on your computer.  
+- The dataset is usually provided as a CSV file (e.g., `books.csv`).
+
+iii. *Load the Data*
+
+- Load the CSV file into your analysis environment using appropriate commands.
+```{r}
+goodreads_data <- read.csv("data/books.csv", stringsAsFactors = FALSE)
+```
+
+- This loads book metadata including titles, authors, average ratings, number of ratings, publishers, and publication dates.
+
+iv. *Initial Processing*
+- Convert average_rating and num_pages from character to numeric.
+- Parse publication_date into a proper Date format.
+- Remove rows with missing or invalid values in critical fields such as average_rating.
+- Split multiple authors if required (delimited by /).
 
 
+v. *Data Cleaning Steps*
+To prepare the data for analysis:
+```{r}
+# Convert relevant columns to numeric
+goodreads_data$average_rating <- as.numeric(goodreads_data$average_rating)
+goodreads_data$num_pages <- as.numeric(goodreads_data$num_pages)
+
+# Convert publication date to Date format
+goodreads_data$publication_date <- as.Date(goodreads_data$publication_date, format = "%m/%d/%Y")
+
+# Remove rows with missing or invalid average ratings
+goodreads_data <- goodreads_data[!is.na(goodreads_data$average_rating), ]
+```
+
+vi. *Other Datasets Used*
+No additional datasets were used in this analysis. All findings and insights are based on this single source.
 
 
 ### Remember
+All analysis and documentation refer to the Goodreads dataset provided in the data/ folder.
 
-Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
+For further clarity, a copy of this dataset's metadata and original source is documented in this report under the About Dataset section.
 
 <!-- Task 2 Tab: Writing your blogpost -->
 
