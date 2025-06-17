@@ -123,15 +123,11 @@ For further clarity, a copy of this dataset's metadata and original source is do
 
 ## Blog post
 
-### What's in this section
-
-Here is where you should write your blogpost! (Task 2)
-
 ### Blogpost Structure
 
-1.  Title : Goodreads Books Dataset Overview and Author’s Notes
+1.  *Title :* **Goodreads Books Dataset Overview and Author’s Notes**
 
-2.  Motivation:  As an avid reader, I often wonder what makes a book truly worth reading. Can data from a large community of readers help us identify high-quality books? This blog post explores the Goodreads Books dataset to answer:
+2.  *Motivation:*  As an avid reader, I often wonder what makes a book truly worth reading. Can data from a large community of readers help us identify high-quality books? This blog post explores the Goodreads Books dataset to answer:
 
 - How do average ratings relate to the number of ratings a book receives?
 - Are certain authors consistently producing higher-rated books?
@@ -139,11 +135,11 @@ Here is where you should write your blogpost! (Task 2)
 
 By investigating these questions, I aim to uncover insights into book popularity and quality from a data-driven perspective.
 
-3.  Data: The dataset I’m using contains detailed metadata for over 11,000 books from Goodreads, including titles, authors, average ratings, rating counts, publishers, publication dates, and page counts. It was originally scraped and shared on Kaggle, making it ideal for analyzing reader preferences and identifying top-rated books. 
+3.  *Data:* The dataset I’m using contains detailed metadata for over 11,000 books from Goodreads, including titles, authors, average ratings, rating counts, publishers, publication dates, and page counts. It was originally scraped and shared on Kaggle, making it ideal for analyzing reader preferences and identifying top-rated books. 
 
 The data includes numeric variables (average_rating, ratings_count, num_pages) and categorical variables (authors, publisher, genre). This combination allows a multifaceted exploration of what makes a book worth recommending.
 
-4.  Analysis : 
+4.  *Analysis : *
 ```{r}
 library(tidyverse)
 library(dplyr)
@@ -162,6 +158,10 @@ goodreads_data <- goodreads_data %>%
 ```
 
 **Author Influence**
+
+First, I explored whether authors with many books tend to receive consistently high (or low) ratings. To do this, I filtered authors with at least five books and then selected the top eight authors by book count.
+
+The violin plot below shows the distribution of average ratings for each top author. The width of each violin indicates the density of books with particular ratings, and the embedded white boxplots highlight the median and interquartile range.
 ```{r}
 library(ggplot2)
 library(tidyr)
@@ -198,8 +198,16 @@ ggplot(violin_data, aes(x = reorder(authors, average_rating, FUN = median), y = 
     legend.position = "none"
   )
 ```
+We observe that some authors, like Neil Gaiman and J.K. Rowling, have a relatively tight distribution with high median ratings around 4.1–4.3. This suggests their books consistently please readers. Other authors show wider distributions, reflecting more variability in book reception. This highlights the importance of author reputation when selecting books — some authors reliably produce quality works.
 
 **Popularity and Ratings**
+
+Next, I examined how a book’s popularity, measured by the number of ratings, relates to its average rating. The bubble plot below visualizes this relationship:
+
+- The x-axis shows the number of ratings (log scale).
+- The y-axis shows the average rating.
+- Bubble size represents the number of pages (book length).
+- Bubble color indicates the average rating.
 ```{r}
 library(scales)
 
@@ -217,9 +225,49 @@ ggplot(goodreads_data, aes(x = ratings_count, y = average_rating)) +
   ) +
   theme_minimal()
 ```
+The plot reveals several patterns:
 
-5.  Conclusions\
-6.  References
+- Popular books (many ratings) tend to have average ratings between 3.5 and 4.5.
+- Some less popular books have very high ratings, which could reflect a niche but passionate audience.
+- Larger books (bigger bubbles) do not necessarily have higher ratings.
+
+Thus, while popularity often correlates with reader approval, it is not a perfect measure of quality. Combining ratings and popularity metrics can better guide book recommendations.
+
+**Book Length**
+
+Finally, I investigated whether book length affects reader ratings. The hexbin plot below shows the density of books by ratings count and average rating:
+```{r}
+library(hexbin)
+
+ggplot(goodreads_data, aes(x = ratings_count, y = average_rating)) +
+  geom_hex(bins = 50) +
+  scale_fill_viridis_c() +
+  scale_x_log10(labels = comma) +
+  labs(
+    title = "Hexbin Plot: Density of Books by Ratings Count and Average Rating",
+    x = "Ratings Count (log scale)",
+    y = "Average Rating",
+    fill = "Count"
+  ) +
+  theme_minimal()
+```
+Most books cluster around average ratings between 3.5 and 4.0 and moderate popularity. There is no clear pattern showing that longer or shorter books receive systematically higher or lower ratings. This suggests that length alone does not predict reader satisfaction.
+
+
+5.  *Conclusions:*
+This analysis provides several takeaways:
+
+-> Prolific authors often maintain consistent rating quality.
+-> Popularity and ratings are related but not definitive indicators of book quality.
+-> Book length does not strongly affect average ratings.
+
+Overall, Goodreads ratings offer valuable insights but should be interpreted with context. Combining multiple metrics can improve recommendations for readers and authors. Future analyses might incorporate genre, reviews, and reader demographics for deeper understanding.
+
+
+6.  *References:*
+Goodreads dataset on Kaggle: [https://www.kaggle.com/datasets/jealousleopard/goodreadsbooks]
+ggplot2 documentation: [https://ggplot2.tidyverse.org]
+dplyr documentation: [https://dplyr.tidyverse.org]
 
 <!-- Task 3 Tab: Behind the Scenes -  -->
 
